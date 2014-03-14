@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopping</title>
+<!-- stylesheets -->
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+</head>
+<body>
+	<section data-role="page" id="login">
+		<header data-role="header" data-theme="b">
+			<h1>Login</h1>
+		</header>
+		<!-- header -->
+		<div align="center" data-role="content" id="loginContent"
+			name="loginContent">
+			<form id="loginForm" method="POST" action="login">
+				<div data-role="fieldcontain">
+					<input class="required" id="username" name="username" type="text"
+						value="" placeholder="Username"> <input id="password"
+						name="password" type="password" value="" placeholder="Password">
+				</div>
+				<button
+					class="ui-btn ui-mini ui-btn-b ui-icon-arrow-r ui-corner-all ui-btn-icon-right">Login</button>
+				<a href="#register"
+					class="ui-btn ui-mini ui-btn-b ui-icon-arrow-r ui-corner-all ui-btn-icon-right">Register</a>
+				<!-- <div data-role="controlgroup" data-type="horizontal">
+												
+					</div> -->
+
+			</form>
+
+		</div>
+		<!-- content -->
+	</section>
+	<!-- login page -->
+
+	<section data-role="page" id="register">
+		<header data-role="header" data-theme="b">
+			<h1>Register</h1>
+			<a href="#login" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-icon-notext">Cancel</a>
+		</header>
+
+		<div data-role="tabs" id="tabs" class="registertabs">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#details" data-theme="a" class="ui-btn-active">Details</a></li>
+					<li><a href="#location" data-theme="a">Location</a></li>
+
+				</ul>
+			</div>
+			<div align="center" data-role="content" id="registerContent"
+				name="registerContent">
+				<form id="registerForm" method="POST" action="register">
+					<div id="details" class="ui-body-d ui-content ui-state-focus">
+						<input class="required" id="firstname" name="firstname"
+							type="text" value="" placeholder="First Name"> <input
+							class="required" id="lastname" name="lastname" type="text"
+							value="" placeholder="Last Name"> <input class="required"
+							id="emailid" name="emailid" type="text" value=""
+							placeholder="Email id"> <input class="required"
+							id="password" name="password" type="password" value=""
+							placeholder="Password"> <input class="required"
+							id="repassword" name="repasswrod" type="text" value=""
+							placeholder="Enter password again">
+					</div>
+					<div id="location" class="ui-body-d ui-content">
+						<input class="required" id="address" name="adress" type="text"
+							value="" placeholder="Address"> <input class="required"
+							id="city" name="city" type="text" value="" placeholder="City">
+						<input class="required" id="state" name="state" type="text"
+							value="" placeholder="State"> <input class="required"
+							id="zipcode" name="zipcode" type="text" value=""
+							placeholder="Zip Code">
+						<button
+					class="ui-btn ui-mini ui-btn-b ui-icon-arrow-r ui-corner-all ui-btn-icon-right">Register</button>
+							
+					</div>
+
+					<!-- <div id="settings" class="ui-body-d ui-content">
+								<input class="required" id="username" name="username" type="text" value="" placeholder="Address">
+								<input class="required" id="password" name="password" type="text" value="" placeholder="City">
+								<input class="required" id="repassword" name="repassword" type="text" value="" placeholder="State">
+								<input class="required" id="zipcode" name="zipcode" type="text" value="" placeholder="Zip Code">
+							</div> -->
+				</form>
+			</div>
+
+		</div>
+
+
+
+	</section>
+</body>
+</html>
