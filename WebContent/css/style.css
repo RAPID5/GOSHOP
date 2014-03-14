@@ -71,3 +71,13 @@
   -webkit-border-bottom-right-radius: inherit;
   border-bottom-right-radius: inherit;
 }
+
+.ui-page-theme-a .ui-flipswitch-active{
+	background-color: #333 !important;
+	border-color : #333 !important;
+}
+
+.custom-label-flipswitch > .ui-flipswitch-active {
+	background-color: #333 !important;
+	border-color : #333 !important;
+}

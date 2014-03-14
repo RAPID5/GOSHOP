@@ -35,7 +35,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
+
 	//Adding headers to different page and sidepanel dynamically
 	$(document).on("pageshow", "[data-role='page']", function() {		
 		if ($($(this)).hasClass("panel_default")) {
@@ -55,16 +55,29 @@ $(document).ready(function() {
 			//$(sidepanel).prependTo( $(this) );
 			
 		}
-
 		if ($($(this)).hasClass("header_default")) {
-			$('<header data-theme="b" data-role="header"><h1></h1><a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-bars">Menu</a></header>')
+
+			var secondaryButton = '';
+
+			if($(this).jqmData("sec")=='add'){
+				secondaryButton += '<a href="#mypanel" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-plus">Add'
+			+'</a>';
+			}
+
+			
+
+			var headerHTML = '<header data-theme="b" data-role="header">'
+			+'<h1></h1>'
+			+'<a href="#mypanel" class="ui-btn-left ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-bars">Menu'
+			+'</a>'
+			+secondaryButton
+			+'</header>';
+
+			$(headerHTML)
 			.prependTo( $(this) )
 			.toolbar({ position: "fixed" });
 			$("[data-role='header'] h1").text($(this).jqmData("title"));
-		}
-		
-		
-		
+		}		
 	});
 	
 	
@@ -100,14 +113,7 @@ $(document).ready(function() {
 
 		if(!text=='')
 			$('#finallist').submit();
-
-
-
-
 	});
-
-
-
 });
 
 $( document ).on( "pagecreate", function() {
@@ -115,6 +121,7 @@ $( document ).on( "pagecreate", function() {
 });
 
 function getCartList(){
+
 	$.getJSON('datamodel/cartlist.json', function(data) {
 	    console.log(data);
 	    var list='';
@@ -150,34 +157,11 @@ function getCartList(){
 	    
 	    console.log(list);
 	  });
-	
-	/*var list = '<div class="ui-corner-all custom-corners">'
-		+'<div class="ui-bar ui-bar-a">'
-		+'<div style="float:left;padding:5px 0 0 0;">'
-		+'<h2>List 1</h2>'
-		+'</div>'
-		+'<div style="float:right;">'
-		+'<a href="#sharetogroup" class="ui-btn ui-btn-mini ui-icon-share ui-corner-all ui-btn-icon-notext" style="margin:0"></a>'
-		+'</div>'
-		+'</div>'
-		+'<div class="ui-body ui-body-a">'
-		+'<ul data-role="listview" data-theme="b" data-count-theme="a">'
-		+'<li>'
-		+'<h2>Item 1</h2>'
-		+'<span class="ui-li-count">12kg</span>'
-		+'</li>'
-		+'<li>'
-		+'<h2>Item 2</h2>'
-		+'<span class="ui-li-count">5kg</span>'
-		+'</li>'
-		+'<li>'
-		+'<h2>Item 3</h2>'
-		+'<span class="ui-li-count">9.5kg</span>'
-		+'</li>'
-		+'</ul>'
-		+'</div>'
-		+'</div>';*/
-	
+}
+
+function showGroup(groupId,groupName){
+	console.log(groupId+':'+groupName);
+	$("#groupdetails [data-role='header'] h1").text(groupName);
 }
 
 function deleteItem(item){
