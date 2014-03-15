@@ -85,12 +85,15 @@ public class Retailer {
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return storeId.hashCode();
     }
 
     @Override
     public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+    	if(other instanceof Retailer)
+    		return this.storeId.equals(((Retailer)other).storeId);
+        else
+        	return false;
     }
 
 }

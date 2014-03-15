@@ -29,6 +29,10 @@ public class DataFetcher {
 
 	public String fetch(String url) {
 		try {
+			
+			 String cachedResponse = ApiCache.lookUp(url);
+			 if(cachedResponse != null)
+				 return cachedResponse;
 
 			/*
 			 * SystemDefaultRoutePlanner routePlanner = new
@@ -53,37 +57,52 @@ public class DataFetcher {
 				e.printStackTrace();
 			}
 			
-		 	HttpHost target = new HttpHost("nielsen.api.tibco.com", 443, "https");
-		 	HttpHost proxy = new HttpHost("proxy.tcs.com", 8080, "http");
-		 	RequestConfig config = RequestConfig.custom()
-                    .setProxy(proxy)
-                    .build();
-			//DefaultHttpClient httpClient = new DefaultHttpClient();
-		 	HttpClients.custom().setSSLSocketFactory(
-		 	        sslsf).build();
-		 	CredentialsProvider credsProvider = new BasicCredentialsProvider();
-		 	NTCredentials ntCreds = new NTCredentials("553566", "Rmar@2014","01hw192491", "INDIA" );
-		 	credsProvider.setCredentials( new AuthScope("proxy.tcs.com",8080), ntCreds);
-		 	HttpClients.custom().setDefaultCredentialsProvider(credsProvider);
-			CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(
-		 	        sslsf).build();;//HttpClients.createDefault();
+			RequestConfig config = null;
+			HttpHost proxy = null;
+			HttpHost target = new HttpHost("nielsen.api.tibco.com", 443,
+					"https");;
 
-		 	//httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-		 	
-		 	HttpGet getRequest = new HttpGet(
-					url);//&" +
-					//"apikey=4904-b90b6c0f-5270-4dd2-a8a6-89467027fecd");
-		 	//https://nielsen.api.tibco.com:443/MyBestSegments/v1/CONNEXIONSNE?addressline=1525%20Wilson%20Blvd&city=Arlington&state=VA&zip=22209
+			
+			// DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpClients.custom().setSSLSocketFactory(sslsf).build();
+			if (ApplicationConstants.USE_PROXY) {
+				proxy = new HttpHost(ApplicationConstants.PROXY_HOST, ApplicationConstants.PROXY_PORT, "http");
+			    config = RequestConfig.custom().setProxy(proxy)
+						.build();
+				CredentialsProvider credsProvider = new BasicCredentialsProvider();
+				NTCredentials ntCreds = new NTCredentials(
+						ApplicationConstants.PROXY_UNAME,
+						ApplicationConstants.PROXY_PASSWD,
+						ApplicationConstants.PROXY_LOCAL_MACHINE_ID,
+						ApplicationConstants.PROXY_DOMAIN);
+				credsProvider.setCredentials(new AuthScope(
+						ApplicationConstants.PROXY_HOST,
+						ApplicationConstants.PROXY_PORT), ntCreds);
+				HttpClients.custom().setDefaultCredentialsProvider(
+						credsProvider);
+			}
+			CloseableHttpClient httpClient = HttpClients.custom()
+					.setSSLSocketFactory(sslsf).build();
+			;// HttpClients.createDefault();
+
+			// httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
+			// proxy);
+
+			HttpGet getRequest = new HttpGet(url);// &" +
+			// "apikey=4904-b90b6c0f-5270-4dd2-a8a6-89467027fecd");
+			// https://nielsen.api.tibco.com:443/MyBestSegments/v1/CONNEXIONSNE?addressline=1525%20Wilson%20Blvd&city=Arlington&state=VA&zip=22209
 
 			getRequest.addHeader("User-Agent", "Shred");
 			getRequest.addHeader("Accept", "application/json");
-			getRequest.addHeader("Apikey", "4904-b90b6c0f-5270-4dd2-a8a6-89467027fecd");
+			getRequest.addHeader("Apikey",
+					ApplicationConstants.NEILESN_API_KEY);
+			if(ApplicationConstants.USE_PROXY)
 				getRequest.setConfig(config);
-				
-				
-				//HttpResponse response = httpClient.execute(getRequest);
-				
-			  CloseableHttpResponse response = httpClient.execute(target, getRequest);
+
+			// HttpResponse response = httpClient.execute(getRequest);
+
+			CloseableHttpResponse response = httpClient.execute(target,
+					getRequest);
 
 			if (response.getStatusLine().getStatusCode() != 200) {
 
@@ -96,12 +115,13 @@ public class DataFetcher {
 			String output;
 			StringBuilder res = new StringBuilder();
 			System.out.println("Output from Server .... \n");
-			
+
 			while ((output = br.readLine()) != null) {
 				res.append(output);
 			}
 
 			httpClient.getConnectionManager().shutdown();
+			ApiCache.persist(url, res.toString());
 			return res.toString();
 
 		} catch (ClientProtocolException e) {
