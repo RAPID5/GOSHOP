@@ -72,7 +72,7 @@ public final class RecommendStore extends HttpServlet {
 					+ URLEncoder.encode(latitude, "UTF-8")
 					+ "&long="
 					+ URLEncoder.encode(longitude, "UTF-8");
-			String jsonReply = dataFetcher.fetch(url);
+			String jsonReply = dataFetcher.fetchNeilsonResource(url);
 			StoreAvailability storeAvailability = null;
             try {
 			storeAvailability = gson.fromJson(jsonReply,

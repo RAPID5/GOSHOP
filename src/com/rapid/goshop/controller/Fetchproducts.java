@@ -35,7 +35,7 @@ public final class Fetchproducts extends HttpServlet {
 		String url = "https://nielsen.api.tibco.com:443/Products/v1?search=" + URLEncoder.encode(name,"UTF-8");
 		
 		DataFetcher fetcher = new DataFetcher();
-		String res = fetcher.fetch(url);
+		String res = fetcher.fetchNeilsonResource(url);
 		response.getWriter().write(res);
 	}
 
