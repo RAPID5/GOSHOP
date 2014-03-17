@@ -54,10 +54,10 @@ public final class RecommendStore extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String upcCodes[] = { "0049000050707", "0036000258493",
 				"0038000596445", "0016000275270", "0012000504044" };
-		//String latitude = "41.9465";
-		//String longitude = "-87.7013";
-		String latitude ="40.695753";
-		String longitude = "-73.780664";
+		String latitude = "41.9465";
+		String longitude = "-87.7013";
+		//String latitude ="40.695753";
+		//String longitude = "-73.780664";
 
 		ArrayList<StoreAvailability> StoreAvailabilityList = new ArrayList<StoreAvailability>();
 		DataFetcher dataFetcher = new DataFetcher();
