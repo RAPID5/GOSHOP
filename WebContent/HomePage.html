@@ -226,19 +226,19 @@
 		</header>
 		<a href="#addmember" data-transition="slidedown" data-position-to="window" class="ui-btn ui-corner-all ui-shadow" data-rel="popup">Add Member</a>
 		<div data-role="popup" id="addmember" data-overlay-theme="b" data-theme="b" style="max-width:400px;">
-		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
-			<div data-role="header" data-theme="a">
-			    <h2>Add Member</h2>
-			</div>
-			<div role="main" class="ui-content">
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+				<div data-role="header" data-theme="a">
+				    <h2>Add Member</h2>
+				</div>
+				<div role="main" class="ui-content">
 				<form>
 			        <div style="padding:10px 20px;">
-			            <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
-			            <a href="#" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</a>
+			        <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+			        <a href="#" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</a>
 			        </div>
-			    </form>				
+		    	</form>				
+				</div>
 			</div>
-		</div>
 		<article data-role="content">
 			<ul data-role="listview" data-theme="a" id="memberlist" >
 			    <li>
@@ -258,6 +258,44 @@
 		<a href="#" onclick="leaveGroup()" class="ui-btn ui-corner-all ui-shadow">Leave Group</a>
 		
 	</section>
+
+
+	<!-- Page: add group -->
+	<section id="addnewgroup" class="header_default" data-role="page" data-title="New Group">
+		<div data-role="panel" id="mypanel" data-theme="b">
+			<header data-role="header">
+				<h2>Menu</h2>
+			</header>
+			<div data-role="controlgroup" data-mini="true">
+				<a href="#home"	class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-b">Home</a>
+				<a href="#shopping"	class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-b">Go Shopping</a> 
+				<a href="#"	class="ui-btn ui-icon-video ui-btn-icon-left ui-corner-all ui-btn-b">Deals</a>
+				<a href="#mycart" onclick="getCartList()" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all ui-btn-b ui-btn-active">My Cart</a> 
+				<a href="#" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-btn-b">Cart Pool</a>
+				<a href="#" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-btn-b">Logout</a>
+			</div>	    	
+		</div><!-- /panel -->
+		<article data-role="content">			
+			<input id="item" type="text" value="" placeholder="Enter Group Name">
+			<a href="#addnewmember" data-transition="slidedown" data-position-to="window" class="ui-btn ui-corner-all ui-shadow" data-rel="popup">Add Member</a>
+			<div data-role="popup" id="addnewmember" data-overlay-theme="b" data-theme="b" style="max-width:400px;">
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+				<div data-role="header" data-theme="a">
+				    <h2>Add Member</h2>
+				</div>
+				<div role="main" class="ui-content">
+				<form>
+			        <div style="padding:10px 20px;">
+			        <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+			        <a href="#" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</a>
+			        </div>
+		    	</form>				
+				</div>
+			</div>			
+		</article>
+	</section>
+
+	
 
 
 
