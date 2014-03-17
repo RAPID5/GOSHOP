@@ -60,7 +60,7 @@ $(document).ready(function() {
 			var secondaryButton = '';
 
 			if($(this).jqmData("sec")=='add'){
-				secondaryButton += '<a href="#mypanel" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-plus">Add'
+				secondaryButton += '<a href="#addnewgroup" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-plus">Add'
 			+'</a>';
 			}
 
