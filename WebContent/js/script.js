@@ -120,6 +120,7 @@ $( document ).on( "pagecreate", function() {
 
 });
 
+//to populate mycart section
 function getCartList(){
 
 	$.getJSON('datamodel/cartlist.json', function(data) {
@@ -128,7 +129,7 @@ function getCartList(){
 	    $.each(data,function(key,val){
 	    	list += '<div class="ui-corner-all custom-corners">';	
 	    	var sharebutton ='';
-	    	if(val.shareflag==1){
+	    	if(val.shareflag==1){//user's own card which can be shared
 	    		sharebutton = '<div style="float:right;">'
 		    		+'<a href="#sharetogroup" class="ui-btn ui-btn-mini ui-icon-share ui-corner-all ui-btn-icon-notext" style="margin:0"></a>'
 		    		+'</div>';
