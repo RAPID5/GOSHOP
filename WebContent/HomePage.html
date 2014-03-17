@@ -18,11 +18,12 @@
 			<h1>Home</h1>
 		</div><!-- header -->
 		<article data-role="content">
-				<a href="#shopping"	class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-b">Go Shopping</a>				
-				<a href="#mycart" onclick="getCartList()" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all ui-btn-b">My Cart</a> 
-				<a href="#mygroup" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-btn-b">My Group</a>
-				<a href="#"	class="ui-btn ui-icon-video ui-btn-icon-left ui-corner-all ui-btn-b">Deals</a>
-				<a href="#" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-btn-b">Cart Pool</a>
+			<a href="#storelist" class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-b">Prepare cart</a>	
+			<a href="#shopping"	class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-b">Go Shopping</a>
+			<a href="#mycart" onclick="getCartList()" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all ui-btn-b">My Cart</a> 
+			<a href="#mygroup" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-btn-b">My Group</a>
+			<a href="#"	class="ui-btn ui-icon-video ui-btn-icon-left ui-corner-all ui-btn-b">Deals</a>
+			<a href="#" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-btn-b">Cart Pool</a>
 			
 		</article><!-- content -->
 		<footer data-role="footer" data-theme="b" data-position="fixed">
@@ -295,7 +296,34 @@
 		</article>
 	</section>
 
-	
+	<section data-role="page" id="storelist" class="header_default" data-title="Nearby Store">
+		<article data-role="content">
+			<div class="ui-corner-all custom-corners">
+			  <div class="ui-bar ui-bar-b card-header">
+			    <span>Matched Products : 4</span>
+			  </div>
+			  <div class="ui-body ui-body-a">
+			    <ul data-role="listview" data-count-theme="b" data-inset="true">
+				    <li><a href="#storedetails">Store 1 <span class="ui-li-count">1.9m</span></a></li>
+				    <li><a href="#storedetails">Store 2 <span class="ui-li-count">3.5m</span></a></li>
+				    <li><a href="#storedetails">Store 3 <span class="ui-li-count">5.0m</span></a></li>
+				</ul>
+			  </div>
+			</div>			
+		</article>
+
+	</section>
+
+	<section data-role="page" id="storedetails" class="header_default" data-title="Nearby Store">
+		<article data-role="content">
+			<div><!-- map comes here --></div>
+			<div><!-- Store details --></div>
+			<div><!-- Available Product list--></div>
+			<div><!-- Deals list--></div>
+		</article>		
+	</section>
+
+
 
 
 
