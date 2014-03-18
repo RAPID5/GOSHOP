@@ -55,8 +55,10 @@ public final class Register extends HttpServlet {
 		LatLong latlong = datafetcher.fetchLatLong(address.getStreet() + " "
 				+ address.getCity() + " " + address.getState() + " "
 				+ address.getZip());
-		address.setLatitude((float) latlong.getLatitude());
-		address.setLongitude((float) latlong.getLongitude());
+		if (latlong != null) {
+			address.setLatitude((float) latlong.getLatitude());
+			address.setLongitude((float) latlong.getLongitude());
+		}
 		ArrayList<Address> addressList = new ArrayList<Address>();
 		addressList.add(address);
 
@@ -71,8 +73,8 @@ public final class Register extends HttpServlet {
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
-		
-		response.sendRedirect("index.html");
+
+		response.getWriter().write("success");
 
 	}
 

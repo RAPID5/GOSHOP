@@ -3,6 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="GoShop">
+	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> 
 		<class>com.rapid.goshop.entities.UserGroup</class>
 		<class>com.rapid.goshop.entities.Cart</class>
 		<class>com.rapid.goshop.entities.StoreInfo</class>
@@ -12,7 +13,7 @@
 		<properties>
 			<property name="javax.persistence.target-database" value="PostgreSQL" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/GoShop" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.20.86.162:5434/GoShop" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="tcs#1234" />
 			

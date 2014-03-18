@@ -1,0 +1,23 @@
+[
+  {
+    "groupId": 1,
+    "groupName": "test group",
+    "lastCartAddedTime": "03/18/2014 16:54 PM"
+  },
+  {
+    "groupId": 2,
+    "groupName": "test group 1"
+  },
+  {
+    "groupId": 3,
+    "groupName": "test group 3"
+  },
+  {
+    "groupId": 4,
+    "groupName": "test group 3"
+  },
+  {
+    "groupId": 5,
+    "groupName": "test group 3"
+  }
+]
