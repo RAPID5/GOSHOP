@@ -9,13 +9,30 @@
 
 </body>
 <script>
+/*
 $.ajax({
-	url: 'fetchproducts',
-	data: {name:'corn falkes'}
+	url: 'register',
+	data: {firstname:'rajneesh',lastname:'raghu',emailid:'rajneesh@test.com',password:'123',city:'Philadelphia',state:'PA',adress:'2418 Panama St',zipcode:'19103'},
+	type: 'post'
 }).done(function(data) {
+	console.log('succcess');
 	console.log(data);
 }).error(function(data,error) {
+	console.log('error');
 	console.log(error);
 });
+*/
+$.ajax({
+	url: 'creategroup',
+	data: {groupId: '4', groupName:'test group 3',userIdList:'["raj@test.com","dinup@test.com","aditya@tcs.com"]',updateOrCreate:'update'},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+
 </script>
 </html>

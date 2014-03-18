@@ -18,47 +18,43 @@ import com.rapid.goshop.util.ApplicationConstants;
 import com.rapid.goshop.vo.UserInfoVO;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class UserExists
  */
-@WebServlet("/login")
-public final class Login extends HttpServlet {
+@WebServlet("/userexists")
+public class UserExists extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public UserExists() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
 		
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(ApplicationConstants.PERSISTENCE_UNIT_NAME);
 
 		EntityManager em = emf.createEntityManager();
 		
-		TypedQuery<UserInfo> query = em.createQuery("SELECT u from UserInfo u WHERE u.email = :email and u.password = :password",UserInfo.class);
+		TypedQuery<UserInfo> query = em.createQuery("SELECT u from UserInfo u WHERE u.email = :email",UserInfo.class);
 		query.setParameter("email", username);
-		query.setParameter("password", password);
 		List<UserInfo> userList = query.getResultList();
 		em.close();
 		emf.close();
 		
 		if(userList.size() == 1) {
-			UserInfoVO user = new UserInfoVO();
-			user.initialize(userList.get(0));
-			request.getSession().setAttribute(ApplicationConstants.DEF_USER_DATA, user);
-			response.sendRedirect("HomePage.html");
+			response.getWriter().write("exists");
 		}
 		else
-			response.sendRedirect("index.html");
+			response.getWriter().write("do not exists");
 	}
+
 
 }

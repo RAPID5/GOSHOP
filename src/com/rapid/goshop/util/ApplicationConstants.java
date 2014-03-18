@@ -44,5 +44,9 @@ public class ApplicationConstants {
 	public static final Integer NUM_STORE_GROUP=Integer.parseInt(props.getProperty("NUM_STORE_GROUP"));
 	public static final Integer	NUM_STORE_PER_GROUP=Integer.parseInt(props.getProperty("NUM_STORE_PER_GROUP"));
 	public static final String PROD_ICON_DNWLD_LOC=props.getProperty("PROD_ICON_DNWLD_LOC");
+	
+	public static final String PERSISTENCE_UNIT_NAME = "GoShop";
+	
+	public static final String DEF_USER_DATA = "USER_DATA";
 
 }
