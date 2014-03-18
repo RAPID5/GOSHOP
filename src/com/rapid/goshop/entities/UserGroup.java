@@ -92,6 +92,18 @@ public class UserGroup implements Serializable {
 	public void setListOfCartOwnedByGroup(List<Cart> listOfCartOwnedByGroup) {
 		this.listOfCartOwnedByGroup = listOfCartOwnedByGroup;
 	}
+	
+	@Override
+	public boolean equals(Object ob) {
+		if(ob instanceof UserGroup) {
+			UserGroup other = (UserGroup)ob;
+			if(other.groupId == this.groupId)
+				return true;
+			else
+				return false;
+		}
+		return false;
+	}
 
 
 }

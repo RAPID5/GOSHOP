@@ -48,5 +48,7 @@ public class ApplicationConstants {
 	public static final String PERSISTENCE_UNIT_NAME = "GoShop";
 	
 	public static final String DEF_USER_DATA = "USER_DATA";
+	
+	public static final String CART_TYPE_PRIVATE = "private";
 
 }
