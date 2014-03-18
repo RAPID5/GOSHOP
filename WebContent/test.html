@@ -51,10 +51,22 @@ $.ajax({
 	console.log(error);
 });
 */
-
+/*
 $.ajax({
 	url: 'leavegroup',
 	data: {groupId: '1'},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+*/
+$.ajax({
+	url: 'claimcart',
+	data: {cartId: '2'},
 	type: 'post'
 }).done(function(data) {
 	console.log('succcess');
