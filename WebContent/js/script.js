@@ -12,18 +12,19 @@ $(document).ready(function() {
 			$ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
 			$ul.listview( "refresh" );
 			$.ajax({
-				url: "datamodel/item.json",
+				url: "datamodel/fetchproducts.json",
 				dataType: "json",
 				//crossDomain: true,
 				data: {
-					q: $input.val()
+					name: $input.val()
 				}
 			})
 			.then( function ( response ) {
-				$.each( response, function ( i, val ) {
-					html += "<li>" + val + "</li>";
+				$.each( response.ProductDetails, function ( i, val ) {
+					//html += "<li>" + val.Description + "</li>";
+					$ul.append("<li>" + val.Description + "</li>");
 				});
-				$ul.html( html );
+				//$ul.html( html );
 				$ul.listview( "refresh" );
 				$ul.trigger( "updatelayout");
 
@@ -56,11 +57,13 @@ $(document).ready(function() {
 			
 		}
 		if ($($(this)).hasClass("header_default")) {
-
+			console.log($(this).jqmData("sec"));
 			var secondaryButton = '';
 
-			if($(this).jqmData("sec")=='add'){
-				secondaryButton += '<a href="#addnewgroup" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-plus">Add'
+			if($(this).jqmData("sec")!=undefined){
+				var button = $(this).jqmData("sec");
+				console.log('button : '+ button);
+				secondaryButton += '<a href="#' + button + '" class="ui-btn-right ui-btn ui-btn-inline ui-btn-icon-notext ui-mini ui-corner-all ui-icon-plus">Add'
 			+'</a>';
 			}
 
@@ -150,13 +153,14 @@ function getCartList(){
 	    		});
 	    		list +='</ul>'
 	    		+'</div>'
-	    		+'</div>';
+	    		+'</div>'
+	    		+'<a href="#storelist" class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-b">Lets Go !</a>';
 	    });
 	    
 	    $("#mycart [data-role=content]").html(list);
 	    $("#mycart [data-role=content]").trigger("create");
 	    
-	    console.log(list);
+	    
 	  });
 }
 
@@ -166,7 +170,6 @@ function showGroup(groupId,groupName){
 }
 
 function deleteItem(item){
-
 	$('#itemlist li').filter(function() { return $.text([this]) === item; }).remove();
 	$("itemlist").listview("refresh");	  
 }

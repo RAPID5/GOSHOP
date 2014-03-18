@@ -55,10 +55,10 @@ public final class Login extends HttpServlet {
 			UserInfoVO user = new UserInfoVO();
 			user.initialize(userList.get(0));
 			request.getSession().setAttribute(ApplicationConstants.DEF_USER_DATA, user);
-			response.sendRedirect("HomePage.html");
+			response.getWriter().write("success");
 		}
 		else
-			response.sendRedirect("index.html");
+			response.getWriter().write("failure");
 	}
 
 }

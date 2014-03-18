@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
+//import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import com.rapid.goshop.util.ApplicationConstants;
 import com.rapid.goshop.util.DataFetcher;
