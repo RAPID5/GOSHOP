@@ -1,17 +1,7 @@
-package com.rapid.goshop.entities;
+package com.rapid.goshop.vo;
 
-import java.io.Serializable;
+public class StoreReviewVO {
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-@Embeddable
-public class StoreReviews implements Serializable{
-
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Column(name="user_comment")
 	private String userComment;
 	
 	private float rating;
@@ -41,6 +31,4 @@ public class StoreReviews implements Serializable{
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
 	}
-	
-
 }

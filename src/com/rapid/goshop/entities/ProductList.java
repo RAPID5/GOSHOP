@@ -15,7 +15,7 @@ public class ProductList {
 	private String description;
 
 	@Column(name = "quantity")
-	private int quantity;
+	private String quantity;
 
 	public String getUpcCode() {
 		return upcCode;
@@ -33,11 +33,11 @@ public class ProductList {
 		this.description = description;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	
