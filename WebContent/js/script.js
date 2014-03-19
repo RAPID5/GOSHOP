@@ -122,7 +122,7 @@ $(document).ready(function() {
 $( document ).on( "pagecreate", function() {
 
 });
-
+/*
 //to populate mycart section
 function getCartList(){
 
@@ -163,7 +163,7 @@ function getCartList(){
 	    
 	  });
 }
-
+*/
 function showGroup(groupId,groupName){
 	console.log(groupId+':'+groupName);
 	$("#groupdetails [data-role='header'] h1").text(groupName);

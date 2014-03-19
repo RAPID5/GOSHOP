@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +31,7 @@ import com.rapid.goshop.entities.UserInfo;
 import com.rapid.goshop.util.ApplicationConstants;
 import com.rapid.goshop.util.DataFetcher;
 import com.rapid.goshop.vo.Availability;
+import com.rapid.goshop.vo.CartVO;
 import com.rapid.goshop.vo.Deal;
 import com.rapid.goshop.vo.GroupVO;
 import com.rapid.goshop.vo.Product;
@@ -147,6 +149,7 @@ public final class RecommendStore extends HttpServlet {
 			}
 
 			storeAvailability.getProduct().setAvailability(null);
+			/*
 
 			synchronized (syncObject) {
 				try {
@@ -156,6 +159,7 @@ public final class RecommendStore extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+			*/
 
 		}
 
@@ -163,7 +167,7 @@ public final class RecommendStore extends HttpServlet {
 
 		int lastSize = -1;
 		StoreAvailCategory lastStoreAvailCategory = null;
-		ArrayList<StoreAvailCategory> storeAvailCategoryList = new ArrayList<StoreAvailCategory>();
+		List<StoreAvailCategory> storeAvailCategoryList = new ArrayList<StoreAvailCategory>();
 
 		for (StoreProductAvailList storeProductAvailList : masterList) {
 			if (lastSize == storeProductAvailList.getProductList().size()) {
@@ -220,12 +224,20 @@ public final class RecommendStore extends HttpServlet {
 		for (StoreAvailCategory storeAvailCategory : storeAvailCategoryList) {
 			for(StoreProductAvailList  storeprodAvailList : storeAvailCategory.getStoreList()) {
 				Retailer retailer = storeprodAvailList.getRetailer();
-				StoreInfo storeInfo = em.find(StoreInfo.class, retailer.getStoreId());
-				if(storeInfo == null) {
+
+				StoreInfo storeInfo = null;
+				TypedQuery<StoreInfo> query = em.createQuery("SELECT s from StoreInfo s WHERE s.storeCode = :storeCode",StoreInfo.class);
+				query.setParameter("storeCode", retailer.getStoreId());
+				List<StoreInfo> storeList = query.getResultList();
+				
+				if(storeList.size() == 0) {
 					storeInfo = new StoreInfo();
 					storeInfo.setStoreCode(retailer.getStoreId());
 					storeInfo.setStoreName(retailer.getStoreName());
 					em.persist(storeInfo);
+				}
+				else {
+					storeInfo = storeList.get(0);
 				}
 				retailer.setStoreInfo(storeInfo);
 				
@@ -233,7 +245,7 @@ public final class RecommendStore extends HttpServlet {
 				int index = 0;
 				for(String eightCouponStoreName : ApplicationConstants.EIGHT_COUPONS_STORE_NAMES) {
 					if(retailer.getRetailerName().toLowerCase().contains(eightCouponStoreName.toLowerCase())) {
-						eightCouponsChainId = ApplicationConstants.EIGHT_COUPONS_STORE_NAMES[index];
+						eightCouponsChainId = ApplicationConstants.EIGHT_COUPONS_STORE_IDS[index];
 						break;
 					}
 					index++;
@@ -242,15 +254,17 @@ public final class RecommendStore extends HttpServlet {
 				if(eightCouponsChainId != null) {
 					String url = "http://api.8coupons.com/v1/getstoredeals?key=" + ApplicationConstants.EIGHT_COUPONS_API_KEY + "&chainID=" + eightCouponsChainId;
 					String jsonResponse = dataFetcher.fetchEightCouponsResource(url);
-					Type dealListType = new TypeToken<Deal>() {
+					Type dealListType = new TypeToken<List<Deal>>() {
 					}.getType();
 					try {
 					List<Deal> dealsList = gson.fromJson(jsonResponse, dealListType);
-					retailer.setDeals(dealsList);
+					int maxDeals = dealsList.size() < ApplicationConstants.MAX_NUMBER_OF_DEALS - 1 ? dealsList.size() -1 : ApplicationConstants.MAX_NUMBER_OF_DEALS - 1;
+					retailer.setDeals(dealsList.subList(0, maxDeals));
 					}
 					catch(Exception e) {
 						e.printStackTrace();
 					}
+					
 					
 				}
 			}
@@ -261,10 +275,11 @@ public final class RecommendStore extends HttpServlet {
 		em.close();
 		emf.close();
 
-		Gson gsonConvertor = new Gson();
 		response.setContentType("application/json");
+		Type finalListType = new TypeToken<List<StoreAvailCategory>>() {
+		}.getType();
 		response.getWriter()
-				.write(gsonConvertor.toJson(storeAvailCategoryList));
+				.write(gson.toJson(storeAvailCategoryList, finalListType));
 
 	}
 

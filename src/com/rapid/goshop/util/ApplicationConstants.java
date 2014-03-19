@@ -55,9 +55,14 @@ public class ApplicationConstants {
 	public static final String CART_TYPE_SHARED = "shared";
 	public static final String CART_TYPE_PUBLIC = "public";
 	public static final boolean CACHE_EIGHT_COUPONS_RESPONSE = Boolean.parseBoolean(props.getProperty("CACHE_EIGHT_COUPONS_RESPONSE"));
+	public static final boolean GET_HCED_NEILSEN_RESP = Boolean.parseBoolean(props.getProperty("GET_HCED_NEILSEN_RESP"));
 	public static final String EIGHT_COUPONS_API_KEY = props.getProperty("EIGHT_COUPONS_API_KEY");
+	public static final int MAX_NUMBER_OF_DEALS = Integer.parseInt(props.getProperty("MAX_NUMBER_OF_DEALS"));
 	
 	public static final String [] EIGHT_COUPONS_STORE_NAMES = props.getProperty("EIGHT_COUPONS_STORE_NAMES").split(",");
 	public static final String [] EIGHT_COUPONS_STORE_IDS = props.getProperty("EIGHT_COUPONS_STORE_IDS").split(",");
+	
+	
+	
 
 }
