@@ -37,9 +37,11 @@ public class DataFetcher {
 	public String fetchNeilsonResource(String url) {
 		try {
 
-			String cachedResponse = ApiCache.lookUp(url);
-			if (cachedResponse != null)
-				return cachedResponse;
+			if (ApplicationConstants.CACHE_NEILSEN_RESPONSE) {
+				String cachedResponse = ApiCache.lookUp(url);
+				if (cachedResponse != null)
+					return cachedResponse;
+			}
 
 			/*
 			 * SystemDefaultRoutePlanner routePlanner = new
@@ -126,7 +128,8 @@ public class DataFetcher {
 			}
 
 			httpClient.getConnectionManager().shutdown();
-			ApiCache.persist(url, res.toString());
+			if (ApplicationConstants.CACHE_NEILSEN_RESPONSE)
+				ApiCache.persist(url, res.toString());
 			return res.toString();
 
 		} catch (ClientProtocolException e) {
@@ -305,4 +308,86 @@ public class DataFetcher {
 		return null;
 
 	}
+	
+	public String fetchEightCouponsResource(String url) {
+		try {
+
+			if (ApplicationConstants.CACHE_EIGHT_COUPONS_RESPONSE) {
+				String cachedResponse = ApiCache.lookUp(url);
+				if (cachedResponse != null)
+					return cachedResponse;
+			}
+
+			
+
+			RequestConfig config = null;
+			HttpHost proxy = null;
+
+			if (ApplicationConstants.USE_PROXY) {
+				proxy = new HttpHost(ApplicationConstants.PROXY_HOST,
+						ApplicationConstants.PROXY_PORT, "http");
+				config = RequestConfig.custom().setProxy(proxy).build();
+				CredentialsProvider credsProvider = new BasicCredentialsProvider();
+				NTCredentials ntCreds = new NTCredentials(
+						ApplicationConstants.PROXY_UNAME,
+						ApplicationConstants.PROXY_PASSWD,
+						ApplicationConstants.PROXY_LOCAL_MACHINE_ID,
+						ApplicationConstants.PROXY_DOMAIN);
+				credsProvider.setCredentials(new AuthScope(
+						ApplicationConstants.PROXY_HOST,
+						ApplicationConstants.PROXY_PORT), ntCreds);
+				HttpClients.custom().setDefaultCredentialsProvider(
+						credsProvider);
+			}
+			CloseableHttpClient httpClient = HttpClients.custom().build();
+			;// HttpClients.createDefault();
+
+			// httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
+			// proxy);
+
+			HttpGet getRequest = new HttpGet(url);// &" +
+
+			getRequest.addHeader("User-Agent", "Shred");
+			getRequest.addHeader("Accept", "application/json");
+			getRequest
+					.addHeader("Apikey", ApplicationConstants.EIGHT_COUPONS_API_KEY);
+			if (ApplicationConstants.USE_PROXY)
+				getRequest.setConfig(config);
+
+			// HttpResponse response = httpClient.execute(getRequest);
+
+			CloseableHttpResponse response = httpClient.execute(getRequest);
+
+			if (response.getStatusLine().getStatusCode() != 200) {
+
+				return "error:" + response.getStatusLine().getStatusCode();
+			}
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(response.getEntity().getContent())));
+
+			String output;
+			StringBuilder res = new StringBuilder();
+			System.out.println("Output from Server .... \n");
+
+			while ((output = br.readLine()) != null) {
+				res.append(output);
+			}
+
+			httpClient.getConnectionManager().shutdown();
+			if (ApplicationConstants.CACHE_EIGHT_COUPONS_RESPONSE)
+				ApiCache.persist(url, res.toString());
+			return res.toString();
+
+		} catch (ClientProtocolException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return "error";
+	}
+
 }

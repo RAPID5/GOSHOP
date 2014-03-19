@@ -45,10 +45,19 @@ public class ApplicationConstants {
 	public static final Integer	NUM_STORE_PER_GROUP=Integer.parseInt(props.getProperty("NUM_STORE_PER_GROUP"));
 	public static final String PROD_ICON_DNWLD_LOC=props.getProperty("PROD_ICON_DNWLD_LOC");
 	
+	public static final boolean CACHE_NEILSEN_RESPONSE = Boolean.parseBoolean(props.getProperty("CACHE_NEILSEN_RESPONSE"));
+	
 	public static final String PERSISTENCE_UNIT_NAME = "GoShop";
 	
 	public static final String DEF_USER_DATA = "USER_DATA";
 	
 	public static final String CART_TYPE_PRIVATE = "private";
+	public static final String CART_TYPE_SHARED = "shared";
+	public static final String CART_TYPE_PUBLIC = "public";
+	public static final boolean CACHE_EIGHT_COUPONS_RESPONSE = Boolean.parseBoolean(props.getProperty("CACHE_EIGHT_COUPONS_RESPONSE"));
+	public static final String EIGHT_COUPONS_API_KEY = props.getProperty("EIGHT_COUPONS_API_KEY");
+	
+	public static final String [] EIGHT_COUPONS_STORE_NAMES = props.getProperty("EIGHT_COUPONS_STORE_NAMES").split(",");
+	public static final String [] EIGHT_COUPONS_STORE_IDS = props.getProperty("EIGHT_COUPONS_STORE_IDS").split(",");
 
 }

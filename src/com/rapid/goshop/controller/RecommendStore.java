@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,15 +23,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.rapid.goshop.entities.Cart;
+import com.rapid.goshop.entities.ProductList;
+import com.rapid.goshop.entities.StoreInfo;
+import com.rapid.goshop.entities.UserInfo;
 import com.rapid.goshop.util.ApplicationConstants;
 import com.rapid.goshop.util.DataFetcher;
 import com.rapid.goshop.vo.Availability;
+import com.rapid.goshop.vo.Deal;
+import com.rapid.goshop.vo.GroupVO;
 import com.rapid.goshop.vo.Product;
 import com.rapid.goshop.vo.Retailer;
 import com.rapid.goshop.vo.StoreAvailCategory;
 import com.rapid.goshop.vo.StoreAvailCategoryList;
 import com.rapid.goshop.vo.StoreAvailability;
 import com.rapid.goshop.vo.StoreProductAvailList;
+import com.rapid.goshop.vo.UserInfoVO;
 
 /**
  * Servlet implementation class RecommendStore
@@ -52,27 +62,63 @@ public final class RecommendStore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String upcCodes[] = { "0049000050707", "0036000258493",
-				"0038000596445", "0016000275270", "0012000504044" };
-		String latitude = "41.9465";
-		String longitude = "-87.7013";
+		UserInfoVO user = (UserInfoVO) request.getSession().getAttribute(
+				ApplicationConstants.DEF_USER_DATA);
+		if (user == null) {
+			response.sendRedirect("index.html");
+			return;
+		}
+		Gson gson = new Gson();
+		
+		Type listType = new TypeToken<List<Long>>() {
+		}.getType();
+		List<Long> cartIdList = gson.fromJson(request.getParameter("cartIdList"), listType);
+		
+		List<Cart> cartList = new ArrayList<Cart>();
+		
+		EntityManagerFactory emf = Persistence
+				.createEntityManagerFactory(ApplicationConstants.PERSISTENCE_UNIT_NAME);
+		EntityManager em = emf.createEntityManager();
+		
+		for(Long cartId : cartIdList) {
+			Cart cart = em.find(Cart.class, cartId);
+			cartList.add(cart);
+		}
+		
+		List<String> upcCodes = new ArrayList<String>();
+		
+		for(Cart cart : cartList) {
+			for(ProductList product : cart.getProductList()) {
+				upcCodes.add(product.getUpcCode());
+			}
+		}
+		
+		UserInfo userInfo = em.find(UserInfo.class, user.getUserId());
+		
+		String latitude = String.valueOf(userInfo.getAddress().get(0).getLatitude());
+		String longitude = String.valueOf(userInfo.getAddress().get(0).getLongitude());
+		System.out.println("latitude = " + latitude);
+		System.out.println("longitude = " + longitude);
 		//String latitude ="40.695753";
 		//String longitude = "-73.780664";
 
 		ArrayList<StoreAvailability> StoreAvailabilityList = new ArrayList<StoreAvailability>();
 		DataFetcher dataFetcher = new DataFetcher();
-		Gson gson = new Gson();
+		
 		
 		ArrayList<StoreProductAvailList> masterList = new ArrayList<StoreProductAvailList>();
 
 		for (String upcCode : upcCodes) {
+			System.out.println("upccode = " + upcCode);
 			String url = "https://nielsen.api.tibco.com:443/StoreAvailability/v1?product_id="
 					+ URLEncoder.encode(upcCode, "UTF-8")
 					+ "&lat="
 					+ URLEncoder.encode(latitude, "UTF-8")
 					+ "&long="
 					+ URLEncoder.encode(longitude, "UTF-8");
+			System.out.println("url = " + url);
 			String jsonReply = dataFetcher.fetchNeilsonResource(url);
+			System.out.println(jsonReply);
 			StoreAvailability storeAvailability = null;
             try {
 			storeAvailability = gson.fromJson(jsonReply,
@@ -168,6 +214,52 @@ public final class RecommendStore extends HttpServlet {
 							storeAvailCategory.getStoreList().subList(0,
 									toIndex)));
 		}
+		
+		em.getTransaction().begin();
+		
+		for (StoreAvailCategory storeAvailCategory : storeAvailCategoryList) {
+			for(StoreProductAvailList  storeprodAvailList : storeAvailCategory.getStoreList()) {
+				Retailer retailer = storeprodAvailList.getRetailer();
+				StoreInfo storeInfo = em.find(StoreInfo.class, retailer.getStoreId());
+				if(storeInfo == null) {
+					storeInfo = new StoreInfo();
+					storeInfo.setStoreCode(retailer.getStoreId());
+					storeInfo.setStoreName(retailer.getStoreName());
+					em.persist(storeInfo);
+				}
+				retailer.setStoreInfo(storeInfo);
+				
+				String eightCouponsChainId = null;
+				int index = 0;
+				for(String eightCouponStoreName : ApplicationConstants.EIGHT_COUPONS_STORE_NAMES) {
+					if(retailer.getRetailerName().toLowerCase().contains(eightCouponStoreName.toLowerCase())) {
+						eightCouponsChainId = ApplicationConstants.EIGHT_COUPONS_STORE_NAMES[index];
+						break;
+					}
+					index++;
+				}
+				
+				if(eightCouponsChainId != null) {
+					String url = "http://api.8coupons.com/v1/getstoredeals?key=" + ApplicationConstants.EIGHT_COUPONS_API_KEY + "&chainID=" + eightCouponsChainId;
+					String jsonResponse = dataFetcher.fetchEightCouponsResource(url);
+					Type dealListType = new TypeToken<Deal>() {
+					}.getType();
+					try {
+					List<Deal> dealsList = gson.fromJson(jsonResponse, dealListType);
+					retailer.setDeals(dealsList);
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+					}
+					
+				}
+			}
+		}
+		
+		em.getTransaction().commit();
+		
+		em.close();
+		emf.close();
 
 		Gson gsonConvertor = new Gson();
 		response.setContentType("application/json");

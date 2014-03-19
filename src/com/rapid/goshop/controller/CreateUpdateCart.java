@@ -1,7 +1,6 @@
 package com.rapid.goshop.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.rapid.goshop.entities.Cart;
 import com.rapid.goshop.entities.ProductList;
-import com.rapid.goshop.entities.StoreInfo;
-import com.rapid.goshop.entities.StoreReviews;
 import com.rapid.goshop.entities.UserGroup;
 import com.rapid.goshop.entities.UserInfo;
 import com.rapid.goshop.util.ApplicationConstants;
 import com.rapid.goshop.vo.CartVO;
 import com.rapid.goshop.vo.ProductDetail;
-import com.rapid.goshop.vo.StoreReviewVO;
 import com.rapid.goshop.vo.UserInfoVO;
 
 /**
@@ -136,36 +131,6 @@ public final class CreateUpdateCart extends HttpServlet {
 				cart.setCartSharedWithGroup(sharedWithGroup);
 			}
 			cart.setCartType(cartVO.getCartType());
-			if (cartVO.getStoreInfoVo() != null) {
-				StoreInfo storeInfo = null;
-				if (cart.getStoreInfoForCart() == null) {
-					storeInfo = new StoreInfo();
-					storeInfo.setStoreName(cartVO.getStoreInfoVo()
-							.getStoreName());
-					storeInfo.setStoreRating(cartVO.getStoreInfoVo()
-							.getStoreRating());
-					em.persist(storeInfo);
-
-				} 
-				
-				storeInfo = em.find(StoreInfo.class, cart
-						.getStoreInfoForCart().getStoreInfoId());
-				
-				storeInfo.getListOfCartOwned().add(cart);
-
-				List<StoreReviews> storeReviewList = new ArrayList<StoreReviews>();
-				for (StoreReviewVO storeReviewVO : cartVO.getStoreInfoVo()
-						.getStoreReviews()) {
-					StoreReviews storeReview = new StoreReviews();
-					storeReview.setRating(storeReviewVO.getRating());
-					storeReview.setUser_id(storeReviewVO.getUser_id());
-					storeReview.setUserComment(storeReviewVO.getUserComment());
-					storeReviewList.add(storeReview);
-				}
-				storeInfo.setStoreReviews(storeReviewList);
-				em.persist(storeInfo);
-				cart.setStoreInfoForCart(storeInfo);
-			}
 			
 			List<ProductList> cartProductList = new ArrayList<ProductList>();
 

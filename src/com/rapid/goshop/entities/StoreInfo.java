@@ -39,6 +39,19 @@ public class StoreInfo implements Serializable {
 	@Column(name="store_rating")
 	private float storeRating;
 	
+	
+	
+	public String getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	@Column( name = "storeCode" , unique=true )
+	private String storeCode;
+	
 	@OneToMany(mappedBy="storeInfoForCart")
 	List<Cart> listOfCartOwned = new ArrayList<Cart>();
 
