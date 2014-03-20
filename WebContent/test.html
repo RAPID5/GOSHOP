@@ -22,92 +22,9 @@ $.ajax({
 	console.log(error);
 });
 */
-/*
 $.ajax({
 	url: 'creategroup',
-	data: {groupId: '', groupName:'Raj Aditya',userIdList:'["raj@test.com","aditya@test.com"]',updateOrCreate:'create'},
-	type: 'post'
-}).done(function(data) {
-	console.log('succcess');
-	console.log(data);
-}).error(function(data,error) {
-	console.log('error');
-	console.log(error);
-});*/
-
-/* create a new cart */
-  
-/* 
-
-$.ajax({
-	url: 'createupdatecart',
-	data: {createOrUpdate: 'create',req: '{"productList":[{"UPC":"0049000037388","Description":"POWERADE STRAWBERRY MELON HIGH FRUCTOSE CORN SYRUP MALTODEXTRIN HYDRATION ENERGY DRINK BOTTLE 1PK 32 FLUID OUNCE","Item_Code":"1781614593","Module":"NONALCOHOL BEVERAGE","Rank":"1","quantity":"1 bot"},{"UPC":"0049000055078","Description":"POWERADE PLAY MIXED BERRY REBIANA SUGAR SPORT DRINK BOTTLE 6PK 12 FLUID OUNCE","Item_Code":"1625549313","Module":"NONALCOHOL BEVERAGE","Rank":"2","quantity":"1 bot"},{"UPC":"0049000020380","Description":"POWERADE PURPLE GRAPE HIGH FRUCTOSE CORN SYRUP MALTODEXTRIN THIRST QUENCHER BOTTLE 1PK 64 FLUID OUNCE","Item_Code":"399038976","Module":"NONALCOHOL BEVERAGE","Rank":"3","quantity":"1 bot"},{"UPC":"0049000036671","Description":"POWERADE UNFLAVORED HIGH FRUCTOSE CORN SYRUP HYDRATION ENERGY DRINK BOTTLE 6PK 20 FLUID OUNCE","Item_Code":"1682500609","Module":"NONALCOHOL BEVERAGE","Rank":"4","quantity":"1 bot"}]} '},
-	type: 'post'
-}).done(function(data) {
-	console.log('succcess');
-	console.log(data);
-}).error(function(data,error) {
-	console.log('error');
-	console.log(error);
-});
-*/
-/*
-$.ajax({
-	url: 'createupdatecart',
-	data: {createOrUpdate: 'update',req: '{"cartId":4,"ownerId":{"userId":4,"firstname":"aditya","lastname":"singh","email":"aditya@test.com","latitude":0.0,"longitude":0.0},"productList":[{"UPC":"0049000037388","Description":"POWERADE STRAWBERRY MELON HIGH FRUCTOSE CORN SYRUP MALTODEXTRIN HYDRATION ENERGY DRINK BOTTLE 1PK 32 FLUID OUNCE","Item_Code":"1781614593","Module":"NONALCOHOL BEVERAGE","Rank":"1","quantity":"1 bot"},{"UPC":"0049000055078","Description":"POWERADE PLAY MIXED BERRY REBIANA SUGAR SPORT DRINK BOTTLE 6PK 12 FLUID OUNCE","Item_Code":"1625549313","Module":"NONALCOHOL BEVERAGE","Rank":"2","quantity":"1 bot"},{"UPC":"0049000020380","Description":"POWERADE PURPLE GRAPE HIGH FRUCTOSE CORN SYRUP MALTODEXTRIN THIRST QUENCHER BOTTLE 1PK 64 FLUID OUNCE","Item_Code":"399038976","Module":"NONALCOHOL BEVERAGE","Rank":"3","quantity":"1 bot"},{"UPC":"0049000036671","Description":"POWERADE UNFLAVORED HIGH FRUCTOSE CORN SYRUP HYDRATION ENERGY DRINK BOTTLE 6PK 20 FLUID OUNCE","Item_Code":"1682500609","Module":"NONALCOHOL BEVERAGE","Rank":"4","quantity":"1 bot"}],"cartType":"public","isCartActive":true ,"cartSharedWithGroup":{"groupId":"2"}}'},
-	type: 'post'
-}).done(function(data) {
-	console.log('succcess');
-	console.log(data);
-}).error(function(data,error) {
-	console.log('error');
-	console.log(error);
-});
-*/
-
-/*
-$.ajax({
-	url: 'leavegroup',
-	data: {groupId: '1'},
-	type: 'post'
-}).done(function(data) {
-	console.log('succcess');
-	console.log(data);
-}).error(function(data,error) {
-	console.log('error');
-	console.log(error);
-});
-*/
-/*
-$.ajax({
-	url: 'claimcart',
-	data: {cartId: '3'},
-	type: 'post'
-}).done(function(data) {
-	console.log('succcess');
-	console.log(data);
-}).error(function(data,error) {
-	console.log('error');
-	console.log(error);
-});
-*/
-
-$.ajax({
-	url: 'recommendstore',
-	data: {cartIdList: '[1,3,4]'},
-	type: 'get'
-}).done(function(data) {
-	console.log('succcess');
-	console.log(data);
-}).error(function(data,error) {
-	console.log('error');
-	console.log(error);
-});
-
-/*
-$.ajax({
-	url: 'selectstore',
-	data: {cartIdList: '[1,3,4]',storeId: '1', rating: '4', comment: 'a good store'},
+	data: {groupId: '4', groupName:'test group 3',userIdList:'["raj@test.com","dinup@test.com","aditya@tcs.com"]',updateOrCreate:'update'},
 	type: 'post'
 }).done(function(data) {
 	console.log('succcess');
@@ -117,6 +34,5 @@ $.ajax({
 	console.log(error);
 });
 
-*/
 </script>
 </html>
