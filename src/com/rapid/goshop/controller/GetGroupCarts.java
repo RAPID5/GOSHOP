@@ -66,13 +66,15 @@ public final class GetGroupCarts extends HttpServlet {
 
 		TypedQuery<Cart> groupCartsQuery = em
 				.createQuery(
-						"SELECT c from Cart c WHERE ( c.cartType = :cartTypeShared OR  c.cartType = :cartTypePublic)   and c.isCartActive = :isCartActive and c.cartSharedWithGroup = :cartSharedWithGroup",
+						"SELECT c from Cart c WHERE c.ownerId != :ownerId and ( c.cartType = :cartTypeShared OR  c.cartType = :cartTypePublic)   and c.isCartActive = :isCartActive and c.cartSharedWithGroup = :cartSharedWithGroup",
 						Cart.class);
 
-		groupCartsQuery.setParameter("cartTypePrivate",
+		groupCartsQuery.setParameter("cartTypeShared",
 				ApplicationConstants.CART_TYPE_SHARED);
 		groupCartsQuery.setParameter("cartTypePublic",
 				ApplicationConstants.CART_TYPE_PUBLIC);
+		groupCartsQuery.setParameter("ownerId",
+				userInfo);
 		groupCartsQuery.setParameter("isCartActive", true);
 		groupCartsQuery.setParameter("cartSharedWithGroup", userGroup);
 		List<Cart> cartList = groupCartsQuery.getResultList();

@@ -6,7 +6,7 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-
+<div id="op"></div>
 </body>
 <script>
 /*
@@ -22,9 +22,10 @@ $.ajax({
 	console.log(error);
 });
 */
+/*
 $.ajax({
 	url: 'creategroup',
-	data: {groupId: '4', groupName:'test group 3',userIdList:'["raj@test.com","dinup@test.com","aditya@tcs.com"]',updateOrCreate:'update'},
+	data: {groupId: '', groupName:'Raj Dinup',userIdList:'["raj@test.com","dinup@test.com"]',updateOrCreate:'create'},
 	type: 'post'
 }).done(function(data) {
 	console.log('succcess');
@@ -33,6 +34,92 @@ $.ajax({
 	console.log('error');
 	console.log(error);
 });
+*/
+/* create a new cart */
+  
+
+/*
+$.ajax({
+	url: 'createupdatecart',
+	data: {createOrUpdate: 'create',req: '{"productList":[{"UPC":"0049000050707","Description":"MALT-O-MEAL CORN FLAKES OVEN TOASTED FLAKES OF CORN RTE CEREAL BAG 18 OUNCE","Item_Code":"727091713","Module":"CEREAL AND GRAIN","Rank":"1","quantity":"1 box"},{"UPC":"0036000258493","Description":"MALT-O-MEAL CORN FLAKES OVEN TOASTED FLAKES OF CORN RTE CEREAL BAG 36 OUNCE","Item_Code":"92913665","Module":"CEREAL AND GRAIN","Rank":"2","quantity":"1 box"}]}'},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});*/
+
+/*
+$.ajax({
+	url: 'createupdatecart',
+	data: {createOrUpdate: 'update',req: '{"cartId":6,"ownerId":{"userId":2,"firstname":"Dinup","lastname":"v","email":"dinup@test.com","latitude":0.0,"longitude":0.0},"productList":[{"UPC":"0042400037934","Description":"MALT-O-MEAL CORN FLAKES OVEN TOASTED FLAKES OF CORN RTE CEREAL BAG 18 OUNCE","Item_Code":"727091713","Module":"CEREAL AND GRAIN","Rank":"1","quantity":"1 box"},{"UPC":"0042400037958","Description":"MALT-O-MEAL CORN FLAKES OVEN TOASTED FLAKES OF CORN RTE CEREAL BAG 36 OUNCE","Item_Code":"92913665","Module":"CEREAL AND GRAIN","Rank":"2","quantity":"1 box"},{"UPC":"0042400006138","Description":"MALT-O-MEAL CORN FLAKES OVEN TOASTED FLAKES OF CORN RTE CEREAL BOX 20 OUNCE","Item_Code":"770769409","Module":"CEREAL AND GRAIN","Rank":"3","quantity":"1 box"}],"cartType":"public","isCartActive":true,"cartSharedWithGroup":{"groupId":"1"}}  '},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+*/
+
+/*
+$.ajax({
+	url: 'leavegroup',
+	data: {groupId: '1'},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+*/
+/*
+$.ajax({
+	url: 'claimcart',
+	data: {cartId: '3'},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+*/
+
+$.ajax({
+	url: 'recommendstore',
+	data: {cartIdList: '[10]'},
+	type: 'get'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+	console.log(JSON.stringify(data));
+	$('#op').html(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+
+
+/*
+$.ajax({
+	url: 'selectstore',
+	data: {cartIdList: '[10]',storeId: '1', rating: '4', comment: 'a good store'},
+	type: 'post'
+}).done(function(data) {
+	console.log('succcess');
+	console.log(data);
+}).error(function(data,error) {
+	console.log('error');
+	console.log(error);
+});
+*/
 
 </script>
 </html>

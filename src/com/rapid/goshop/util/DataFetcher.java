@@ -37,11 +37,13 @@ public class DataFetcher {
 	public String fetchNeilsonResource(String url) {
 		try {
 
+			
 			if (ApplicationConstants.CACHE_NEILSEN_RESPONSE) {
 				String cachedResponse = ApiCache.lookUp(url);
 				if (cachedResponse != null)
 					return cachedResponse;
 			}
+			
 
 			/*
 			 * SystemDefaultRoutePlanner routePlanner = new
